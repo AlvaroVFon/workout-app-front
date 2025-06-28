@@ -1,0 +1,30 @@
+# Build outputs
+dist/
+dist-ssr/
+coverage/
+*.local
+
+# Dependencies
+node_modules/
+
+# Logs
+logs
+*.log
+
+# Environment variables
+.env*
+
+# Build info
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config files that shouldn't be formatted
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Auto-generated files
+CHANGELOG.md
