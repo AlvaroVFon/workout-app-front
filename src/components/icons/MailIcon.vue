@@ -1,41 +1,41 @@
 <script setup lang="ts">
-import { EnvelopeIcon } from '@heroicons/vue/24/outline'
-import { EnvelopeIcon as EnvelopeIconSolid } from '@heroicons/vue/24/solid'
+import type { IconProps } from '@/types/common/icon.types'
 import { computed } from 'vue'
 
-interface Props {
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  solid?: boolean
-  class?: string
-}
+const props = defineProps<IconProps>()
 
-const props = withDefaults(defineProps<Props>(), {
-  size: 'md',
-  solid: false,
-  class: '',
-})
-
-const sizeClasses = computed(() => {
+const sizeClass = computed(() => {
   const sizes = {
-    sm: 'h-4 w-4',
-    md: 'h-5 w-5',
-    lg: 'h-6 w-6',
-    xl: 'h-8 w-8',
+    sm: 'w-4 h-4',
+    md: 'w-5 h-5',
+    lg: 'w-6 h-6',
+    xl: 'w-8 h-8',
   }
-  return sizes[props.size]
+  return sizes[props.size || 'md']
 })
 
-const iconClasses = computed(() => {
-  return `${sizeClasses.value} ${props.class}`
+const colorClass = computed(() => {
+  return props.color || 'currentColor'
 })
 </script>
 <template>
-  <EnvelopeIconSolid
-    v-if="solid"
-    :class="iconClasses"
-  />
-  <EnvelopeIcon
-    v-else
-    :class="iconClasses"
-  />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    :stroke="colorClass"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    :class="`lucide lucide-mail-icon lucide-mail ${sizeClass}`"
+  >
+    <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+    <rect
+      x="2"
+      y="4"
+      width="20"
+      height="16"
+      rx="2"
+    />
+  </svg>
 </template>

@@ -1,2 +1,75 @@
 @import 'tailwindcss';
-@plugin "daisyui";
+
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark --prefersdark,
+    catppuccin-latte,
+    catppuccin-mocha;
+}
+
+/* Custom Catppuccin Latte Theme */
+[data-theme='light'],
+[data-theme='catppuccin-latte'] {
+  --color-base-100: #eff1f5;
+  --color-base-200: #e6e9ef;
+  --color-base-300: #dce0e8;
+  --color-base-content: #4c4f69;
+
+  --color-primary: #8839ef;
+  --color-primary-content: #eff1f5;
+
+  --color-secondary: #ea76cb;
+  --color-secondary-content: #eff1f5;
+
+  --color-accent: #fe640b;
+  --color-accent-content: #eff1f5;
+
+  --color-neutral: #7c7f93;
+  --color-neutral-content: #eff1f5;
+
+  --color-info: #1e66f5;
+  --color-info-content: #eff1f5;
+
+  --color-success: #40a02b;
+  --color-success-content: #eff1f5;
+
+  --color-warning: #df8e1d;
+  --color-warning-content: #4c4f69;
+
+  --color-error: #d20f39;
+  --color-error-content: #eff1f5;
+}
+
+/* Custom Catppuccin Mocha Theme */
+[data-theme='dark'],
+[data-theme='catppuccin-mocha'] {
+  --color-base-100: #1e1e2e;
+  --color-base-200: #181825;
+  --color-base-300: #11111b;
+  --color-base-content: #cdd6f4;
+
+  --color-primary: #cba6f7;
+  --color-primary-content: #1e1e2e;
+
+  --color-secondary: #f5c2e7;
+  --color-secondary-content: #1e1e2e;
+
+  --color-accent: #fab387;
+  --color-accent-content: #1e1e2e;
+
+  --color-neutral: #6c7086;
+  --color-neutral-content: #cdd6f4;
+
+  --color-info: #89b4fa;
+  --color-info-content: #1e1e2e;
+
+  --color-success: #a6e3a1;
+  --color-success-content: #1e1e2e;
+
+  --color-warning: #f9e2af;
+  --color-warning-content: #1e1e2e;
+
+  --color-error: #f38ba8;
+  --color-error-content: #1e1e2e;
+}

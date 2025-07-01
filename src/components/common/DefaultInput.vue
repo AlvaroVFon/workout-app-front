@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, computed } from 'vue'
+import { computed } from 'vue'
 
 type Props = {
   modelValue?: string
@@ -27,7 +27,7 @@ const sizeClasses = computed(() => {
   <label class="input">
     <component :is="props.Icon" />
     <input
-      :class="`input ${sizeClasses} ${props.className || ''}`"
+      :class="`${sizeClasses} ${props.className || ''}`"
       :type="props.type"
       :placeholder="props.placeholder"
       :value="props.modelValue"
@@ -35,3 +35,19 @@ const sizeClasses = computed(() => {
     />
   </label>
 </template>
+
+<style scoped>
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--color-base-100) inset !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* Para navegadores no-webkit */
+input:autofill {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+</style>

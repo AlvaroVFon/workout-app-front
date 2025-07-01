@@ -5,11 +5,14 @@ import MailIcon from '@/components/icons/MailIcon.vue'
 import KeyIcon from '@/components/icons/KeyIcon.vue'
 import DefaultInput from '@/components/common/DefaultInput.vue'
 import DefaultButton from '@/components/common/DefaultButton.vue'
+
 const { title } = defineProps<CardProps>()
 const email = ref('')
 const password = ref('')
 
-function handleLogin() {}
+function handleLogin() {
+  console.log(email.value, password.value)
+}
 </script>
 
 <template>
