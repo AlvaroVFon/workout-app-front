@@ -7,16 +7,20 @@ export interface User {
   updatedAt: string
 }
 
-export interface LoginCredentials {
+export interface LoginCredentials extends Record<string, unknown> {
   email: string
   password: string
 }
 
-export interface RegisterCredentials {
+export interface RegisterCredentials extends Record<string, unknown> {
   email: string
   password: string
-  confirmPassword: string
+  passwordConfirm: string
   name: string
+  lastName: string
+  country: string
+  idDocument: string
+  role: string
 }
 
 export interface AuthState {
