@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import DefaultLayout from '@/layouts/auth/DefaultLayout.vue'
-import LoginCard from '@/components/login/LoginCard.vue'
+import LoginForm from '@/components/auth/LoginForm.vue'
 </script>
 
 <template>
   <DefaultLayout>
-    <LoginCard title="Welcome!" />
+    <LoginForm title="Welcome!" />
   </DefaultLayout>
 </template>

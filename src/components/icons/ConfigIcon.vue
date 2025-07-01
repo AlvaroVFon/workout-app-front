@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { IconProps } from '@/types/common/icon.types'
+import type { IconProps } from '@/types/common/icon.types'
 import { computed } from 'vue'
 
-const props = defineProps<IconProps>()
+const props = withDefaults(defineProps<IconProps>(), {
+  size: 'md',
+  color: 'currentColor',
+})
 
 const sizeClass = computed(() => {
   const sizes = {
@@ -10,12 +13,8 @@ const sizeClass = computed(() => {
     md: 'w-5 h-5',
     lg: 'w-6 h-6',
     xl: 'w-8 h-8',
-  }
-  return sizes[props.size || 'md']
-})
-
-const colorClass = computed(() => {
-  return props.color || 'currentColor'
+  } as const
+  return sizes[props.size]
 })
 </script>
 <template>
@@ -23,7 +22,7 @@ const colorClass = computed(() => {
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="none"
-    :stroke="colorClass"
+    :stroke="props.color"
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"

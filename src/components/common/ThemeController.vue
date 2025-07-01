@@ -4,15 +4,25 @@ import { useTheme } from '@/composables/useTheme'
 import { Themes } from '@/utils/themes.enum'
 
 const { theme, setTheme } = useTheme()
+
 onMounted(() => {
-  setTheme(theme.value)
+  if (theme.value) {
+    setTheme(theme.value)
+  }
 })
 
-interface ThemeControllerProps {
-  size?: string
+const handleThemeChange = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  setTheme(target.checked ? Themes.DARK : Themes.LIGHT)
 }
 
-const props = defineProps<ThemeControllerProps>()
+interface ThemeControllerProps {
+  size?: 'sm' | 'md' | 'lg' | 'xl'
+}
+
+const props = withDefaults(defineProps<ThemeControllerProps>(), {
+  size: 'md',
+})
 
 const sizeClass = computed(() => {
   const sizes = {
@@ -20,18 +30,21 @@ const sizeClass = computed(() => {
     md: 'w-6 h-6',
     lg: 'w-8 h-8',
     xl: 'w-10 h-10',
-  }
-  return sizes[props.size || 'md']
+  } as const
+  return sizes[props.size]
 })
 </script>
 
 <template>
-  <label class="swap swap-rotate">
+  <label
+    class="swap swap-rotate"
+    aria-label="Theme toggle"
+  >
     <input
       type="checkbox"
       class="theme-controller"
       :checked="theme === 'dark'"
-      @change="setTheme($event.target.checked ? Themes.DARK : Themes.LIGHT)"
+      @change="handleThemeChange"
     />
 
     <svg

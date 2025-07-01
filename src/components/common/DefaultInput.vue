@@ -2,15 +2,15 @@
 import { computed } from 'vue'
 
 type Props = {
-  modelValue?: string
+  modelValue: string
   placeholder?: string
-  type?: string
+  type?: 'text' | 'email' | 'password'
   size?: 'sm' | 'md' | 'lg' | 'xl'
   className?: string
-  Icon: object
+  Icon?: object
 }
 
-const props = defineProps<Props>()
+const { size = 'md', Icon, className = '', type = 'text', placeholder = '' } = defineProps<Props>()
 const emit = defineEmits(['update:modelValue'])
 
 const sizeClasses = computed(() => {
@@ -20,18 +20,18 @@ const sizeClasses = computed(() => {
     lg: 'input-lg',
     xl: 'input-xl',
   }
-  return sizes[props.size || 'md']
+  return sizes[size]
 })
 </script>
 <template>
-  <label class="input">
-    <component :is="props.Icon" />
+  <label class="input w-full">
+    <component :is="Icon" />
     <input
-      :class="`${sizeClasses} ${props.className || ''}`"
-      :type="props.type"
-      :placeholder="props.placeholder"
-      :value="props.modelValue"
-      @input="emit('update:modelValue', $event.target.value)"
+      :class="`${sizeClasses} ${className || ''}`"
+      :type="type"
+      :placeholder="placeholder"
+      :value="modelValue"
+      @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
   </label>
 </template>
@@ -45,7 +45,6 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: inherit !important;
 }
 
-/* Para navegadores no-webkit */
 input:autofill {
   background-color: transparent !important;
   color: inherit !important;

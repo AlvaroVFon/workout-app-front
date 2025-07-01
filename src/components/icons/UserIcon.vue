@@ -26,15 +26,13 @@ const sizeClass = computed(() => {
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    :class="`lucide lucide-mail-icon lucide-mail ${sizeClass}`"
+    :class="`lucide lucide-user-icon lucide-user ${sizeClass}`"
   >
-    <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
-    <rect
-      x="2"
-      y="4"
-      width="20"
-      height="16"
-      rx="2"
+    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+    <circle
+      cx="12"
+      cy="7"
+      r="4"
     />
   </svg>
 </template>

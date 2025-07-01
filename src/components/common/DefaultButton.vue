@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { ButtonProps } from '@/types/common/button.types'
+import type { ButtonProps } from '@/types/common/button.types'
+import DefaultSpinner from '@/components/common/DefaultSpinner.vue'
+
 const {
-  label = 'Click Me',
-  variant = '',
+  label,
+  variant = 'primary',
   size = 'md',
   disabled = false,
+  loading = false,
+  type = 'button',
 } = defineProps<ButtonProps>()
 
 const className = computed(() => {
@@ -28,14 +32,31 @@ const className = computed(() => {
 
   return `${base} ${variantClass} ${sizeClass}`
 })
+
+const spinnerSize = computed(() => {
+  const sizeMap = {
+    xs: 'xs' as const,
+    sm: 'xs' as const,
+    md: 'sm' as const,
+    lg: 'md' as const,
+  }
+  return sizeMap[size]
+})
 </script>
 
 <template>
   <button
+    :type="type"
     :class="className"
-    :disabled="disabled"
+    :disabled="disabled || loading"
     @click="$emit('click')"
   >
-    {{ label }}
+    <DefaultSpinner
+      v-if="loading"
+      :size="spinnerSize"
+      variant="neutral"
+    />
+    <span v-if="label && !loading">{{ label }}</span>
+    <slot v-if="!loading" />
   </button>
 </template>
