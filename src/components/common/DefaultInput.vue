@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, type Component } from 'vue'
 
 type Props = {
   modelValue: string
@@ -7,7 +7,7 @@ type Props = {
   type?: 'text' | 'email' | 'password'
   size?: 'sm' | 'md' | 'lg' | 'xl'
   className?: string
-  Icon?: object
+  Icon?: Component
 }
 
 const { size = 'md', Icon, className = '', type = 'text', placeholder = '' } = defineProps<Props>()

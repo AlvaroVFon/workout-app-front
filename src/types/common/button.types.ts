@@ -1,3 +1,5 @@
+import type { Component } from 'vue'
+
 export type ButtonVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'ghost' | 'link'
 
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
@@ -9,4 +11,5 @@ export interface ButtonProps {
   disabled?: boolean
   loading?: boolean
   type?: 'button' | 'submit' | 'reset'
+  Icon?: Component
 }
