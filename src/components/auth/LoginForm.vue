@@ -8,10 +8,12 @@ import DefaultAlert from '@/components/common/DefaultAlert.vue'
 import { loginSchema } from '@/schemas/login.schema'
 import { useForm } from '@/composables/useForm'
 import { useAuth } from '@/composables/useAuth'
+import { useRouter } from 'vue-router'
 import type { LoginCredentials } from '@/types/auth'
 
 const { title } = defineProps<CardProps>()
-const { login, clearError } = useAuth()
+const { login, error, isLoading } = useAuth()
+const router = useRouter()
 
 const initialValues: LoginCredentials = {
   email: '',
@@ -19,13 +21,9 @@ const initialValues: LoginCredentials = {
 }
 
 const onSubmit = async (formData: LoginCredentials) => {
-  try {
-    clearError()
-    await login(formData)
-    // Redireccionar después del login exitoso
-    // router.push('/dashboard')
-  } catch (err) {
-    console.error('Login failed:', err)
+  await login(formData)
+  if (!error.value) {
+    router.push('/dashboard')
   }
 }
 
@@ -63,13 +61,13 @@ const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm({
         variant="primary"
         size="md"
         label="Login"
-        :loading="isSubmitting"
+        :loading="isSubmitting || isLoading"
         type="submit"
       />
       <DefaultAlert
-        v-if="errors.email || errors.password"
+        v-if="errors.email || errors.password || error"
         type="error"
-        :message="errors.email || errors.password || ''"
+        :message="errors.email || errors.password || error || ''"
         class="w-96"
       />
       <p class="text-center text-sm text-gray-500 mt-4">

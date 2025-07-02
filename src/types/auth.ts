@@ -26,17 +26,25 @@ export interface RegisterCredentials extends Record<string, unknown> {
 export interface AuthState {
   user: User | null
   token: string | null
+  refreshToken: string | null
   isAuthenticated: boolean
   isLoading: boolean
   error: string | null
 }
 
+export interface AuthTokens {
+  token: string
+  refreshToken: string
+}
+
 export interface LoginResponse {
   user: User
   token: string
+  refreshToken: string
 }
 
 export interface RegisterResponse {
   user: User
   token: string
+  refreshToken: string
 }
