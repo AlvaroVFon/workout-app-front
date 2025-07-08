@@ -10,6 +10,7 @@ const emailSchema = Joi.string()
     'string.empty': 'Email is required',
     'any.required': 'Email is required',
   })
+
 const passwordSchema = Joi.string().min(6).required().label('Password')
 
 const loginSchema = Joi.object<LoginCredentials>({
@@ -17,4 +18,23 @@ const loginSchema = Joi.object<LoginCredentials>({
   password: passwordSchema,
 })
 
-export { emailSchema, passwordSchema, loginSchema }
+const forgotPasswordSchema = Joi.object({
+  email: emailSchema,
+}).messages({
+  'object.unknown': 'Invalid field(s) provided',
+})
+
+const resetPasswordSchema = Joi.object({
+  code: Joi.string().length(6).required().label('Code'),
+  password: passwordSchema,
+  passwordConfirmation: Joi.string()
+    .valid(Joi.ref('password'))
+    .required()
+    .label('Password Confirmation')
+    .messages({
+      'any.only': 'Password confirmation does not match',
+      'string.empty': 'Password confirmation is required',
+    }),
+})
+
+export { emailSchema, passwordSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema }

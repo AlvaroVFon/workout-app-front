@@ -20,6 +20,7 @@ export function useForm<T extends Record<string, unknown>>(options: UseFormOptio
     ),
   )
 
+  const success = ref(false)
   const isSubmitting = ref(false)
   const isTouched = ref(false)
 
@@ -58,6 +59,7 @@ export function useForm<T extends Record<string, unknown>>(options: UseFormOptio
     }
 
     isSubmitting.value = false
+    success.value = isValid
   }
 
   const resetForm = () => {
@@ -80,5 +82,6 @@ export function useForm<T extends Record<string, unknown>>(options: UseFormOptio
     handleChange,
     handleSubmit,
     resetForm,
+    success,
   }
 }

@@ -26,7 +26,7 @@ export function useAuth() {
 
       const response = await apiService.post<LoginResponse>('/auth/login', credentials)
 
-      if (response.statusCode !== 200) {
+      if (response.statusCode !== 200 || !response.data?.token) {
         error.value = 'Invalid credentials'
         user.value = null
         token.value = null

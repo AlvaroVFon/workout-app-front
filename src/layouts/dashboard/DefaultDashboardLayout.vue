@@ -5,6 +5,7 @@ import DefaultButton from '@/components/common/DefaultButton.vue'
 import { onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
+import PowerIcon from '@/components/icons/PowerIcon.vue'
 
 const router = useRouter()
 const { logout, isAuthenticated, initializeAuth } = useAuth()
@@ -40,10 +41,11 @@ async function handleLogout() {
         <DefaultButton
           variant="ghost"
           size="sm"
-          class="ml-2"
+          class="ml-2 hover:text-red-300"
           aria-label="Logout"
           @click="handleLogout"
-        ></DefaultButton>
+          ><PowerIcon
+        /></DefaultButton>
       </nav>
     </template>
   </DefaultNavbar>

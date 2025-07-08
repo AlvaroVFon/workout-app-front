@@ -8,37 +8,37 @@
     catppuccin-mocha;
 }
 
-/* Custom Catppuccin Latte Theme */
+/* Custom Catppuccin Latte Theme (Pastel) */
 [data-theme='light'],
 [data-theme='catppuccin-latte'] {
-  --color-base-100: #eff1f5;
-  --color-base-200: #e6e9ef;
-  --color-base-300: #dce0e8;
-  --color-base-content: #4c4f69;
+  --color-base-100: #f8f8f8; /* Lightest pastel grey */
+  --color-base-200: #e0e0e0; /* Lighter pastel grey */
+  --color-base-300: #c8c8c8; /* Pastel grey */
+  --color-base-content: #555555; /* Darker grey for text */
 
-  --color-primary: #8839ef;
-  --color-primary-content: #eff1f5;
+  --color-primary: #a799ff; /* Pastel purple */
+  --color-primary-content: #ffffff; /* White for text on primary */
 
-  --color-secondary: #ea76cb;
-  --color-secondary-content: #eff1f5;
+  --color-secondary: #ffb3e6; /* Pastel pink */
+  --color-secondary-content: #ffffff; /* White for text on secondary */
 
-  --color-accent: #fe640b;
-  --color-accent-content: #eff1f5;
+  --color-accent: #ffcc99; /* Pastel orange */
+  --color-accent-content: #555555; /* Darker grey for text on accent */
 
-  --color-neutral: #7c7f93;
-  --color-neutral-content: #eff1f5;
+  --color-neutral: #b0b0b0; /* Pastel neutral grey */
+  --color-neutral-content: #ffffff; /* White for text on neutral */
 
-  --color-info: #1e66f5;
-  --color-info-content: #eff1f5;
+  --color-info: #99ccff; /* Pastel blue */
+  --color-info-content: #555555; /* Darker grey for text on info */
 
-  --color-success: #40a02b;
-  --color-success-content: #eff1f5;
+  --color-success: #a6e6a6; /* Pastel green */
+  --color-success-content: #555555; /* Darker grey for text on success */
 
-  --color-warning: #df8e1d;
-  --color-warning-content: #4c4f69;
+  --color-warning: #ffe099; /* Pastel yellow */
+  --color-warning-content: #555555; /* Darker grey for text on warning */
 
-  --color-error: #d20f39;
-  --color-error-content: #eff1f5;
+  --color-error: #ff9999; /* Pastel red */
+  --color-error-content: #ffffff; /* White for text on error */
 }
 
 /* Custom Catppuccin Mocha Theme */

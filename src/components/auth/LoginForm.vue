@@ -57,6 +57,11 @@ const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm({
         size="md"
         :Icon="KeyIcon"
       />
+      <router-link
+        to="/forgot-password"
+        class="text-neutral hover:text-primary duration-300 text-sm text-right mb-2"
+        >Forgot password?</router-link
+      >
       <DefaultButton
         variant="primary"
         size="md"
@@ -66,9 +71,9 @@ const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm({
       />
       <DefaultAlert
         v-if="errors.email || errors.password || error"
-        type="error"
+        type="neutral"
         :message="errors.email || errors.password || error || ''"
-        class="w-96"
+        class="w-96 text-red-400"
       />
       <p class="text-center text-sm text-gray-500 mt-4">
         Don't have an account?
