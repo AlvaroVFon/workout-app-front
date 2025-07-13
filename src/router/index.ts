@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
+import { useLogin } from '@/composables/useLogin'
 import LoginView from '../views/auth/LoginView.vue'
 
 const router = createRouter({
@@ -7,14 +7,20 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'login',
       component: LoginView,
       meta: { requiresGuest: true },
     },
     {
-      path: '/register',
-      name: 'register',
+      path: '/signup',
+      name: 'signup',
       component: () => import('../views/auth/RegisterView.vue'),
+      meta: { requiresGuest: true },
+    },
+    {
+      path: '/signup-verify/:uuid',
+      name: 'signup-verify',
+      component: () => import('../views/auth/SignupVerifyView.vue'),
       meta: { requiresGuest: true },
     },
     {
@@ -37,7 +43,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated } = useLogin()
 
   if (to.meta.requiresAuth && !isAuthenticated.value) {
     next('/')

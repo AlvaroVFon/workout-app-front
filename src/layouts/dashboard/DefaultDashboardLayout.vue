@@ -4,18 +4,18 @@ import ThemeController from '@/components/common/ThemeController.vue'
 import DefaultButton from '@/components/common/DefaultButton.vue'
 import { onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
+import { useLogin } from '@/composables/useLogin'
 import PowerIcon from '@/components/icons/PowerIcon.vue'
 
 const router = useRouter()
-const { logout, isAuthenticated, initializeAuth } = useAuth()
+const { logout, isAuthenticated } = useLogin()
 
 onMounted(() => {
   watch(
     isAuthenticated,
     (val) => {
       if (!val) {
-        router.push('/')
+        router.push({ name: 'login' })
       }
     },
     { immediate: true },
@@ -23,14 +23,14 @@ onMounted(() => {
 })
 async function handleLogout() {
   await logout()
-  router.push('/')
+  router.push({ name: 'login' })
 }
 </script>
 <template>
   <DefaultNavbar>
     <template #logo>
       <router-link
-        to="/dashboard"
+        :to="{ name: 'dashboard' }"
         class="text-xl font-bold"
         >Workout Controller</router-link
       >

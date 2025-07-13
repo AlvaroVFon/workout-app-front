@@ -9,68 +9,71 @@ interface UseFormOptions<T extends Record<string, unknown>> {
 
 export function useForm<T extends Record<string, unknown>>(options: UseFormOptions<T>) {
   const values = reactive({ ...options.initialValues }) as T
+  const errors = reactive<Record<keyof T, string | null>>(initErrors(options.initialValues))
+  const success = ref(false)
+  const isSubmitting = ref(false)
+  const isTouched = ref(false)
 
-  const errors = reactive<Record<keyof T, string | null>>(
-    Object.keys(options.initialValues).reduce(
+  function initErrors(initialValues: T): Record<keyof T, string | null> {
+    return Object.keys(initialValues).reduce(
       (acc, key) => {
         acc[key as keyof T] = null
         return acc
       },
       {} as Record<keyof T, string | null>,
-    ),
-  )
+    )
+  }
 
-  const success = ref(false)
-  const isSubmitting = ref(false)
-  const isTouched = ref(false)
+  function setErrors(newErrors: Partial<Record<keyof T, string>>) {
+    for (const key in values) {
+      const errorKey = key as keyof T
+      ;(errors as Record<string, string | null>)[key] = newErrors[errorKey] ?? null
+    }
+  }
 
-  const validate = (): boolean => {
-    const result = options.schema.validate(values, { abortEarly: false })
+  function validate(): boolean {
+    const { error } = options.schema.validate(values, { abortEarly: false })
     const newErrors: Partial<Record<keyof T, string>> = {}
 
-    if (result.error) {
-      for (const detail of result.error.details) {
+    if (error) {
+      for (const detail of error.details) {
         const key = detail.path[0] as keyof T
         newErrors[key] = detail.message
       }
     }
 
-    for (const key in values) {
-      const errorKey = key as keyof T
-      ;(errors as Record<string, string | null>)[key] = newErrors[errorKey] ?? null
-    }
-
-    return !result.error
+    setErrors(newErrors)
+    return !error
   }
 
-  const handleChange = <K extends keyof T>(key: K, value: T[K]) => {
+  function handleChange<K extends keyof T>(key: K, value: T[K]) {
     values[key] = value
     isTouched.value = true
     validate()
   }
 
-  const handleSubmit = async () => {
+  async function handleSubmit() {
     isSubmitting.value = true
     const isValid = validate()
 
     if (isValid) {
-      const rawValues = toRaw(values)
-      await options.onSubmit(rawValues)
+      try {
+        await options.onSubmit(toRaw(values))
+        success.value = true
+      } catch (err) {
+        success.value = false
+        isSubmitting.value = false
+        throw err
+      }
     }
 
     isSubmitting.value = false
     success.value = isValid
   }
 
-  const resetForm = () => {
-    for (const key in options.initialValues) {
-      values[key as keyof T] = options.initialValues[key as keyof T]
-    }
-
-    for (const key in errors) {
-      ;(errors as Record<string, string | null>)[key] = null
-    }
-
+  function resetForm() {
+    Object.assign(values, options.initialValues)
+    setErrors({})
     isTouched.value = false
   }
 

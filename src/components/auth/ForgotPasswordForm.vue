@@ -8,6 +8,7 @@ import MailIcon from '@/components/icons/MailIcon.vue'
 import DefaultInput from '@/components/common/DefaultInput.vue'
 import DefaultButton from '@/components/common/DefaultButton.vue'
 import DefaultAlert from '@/components/common/DefaultAlert.vue'
+import { Endpoint } from '@/utils/endpoints.enum'
 
 const router = useRouter()
 
@@ -16,9 +17,9 @@ const initialValues = reactive({
 })
 
 async function onSubmit(formData: typeof initialValues) {
-  const response = await apiService.post('/auth/forgot-password', formData)
+  const response = await apiService.post(Endpoint.FORGOT_PASSWORD, formData)
   if (response.statusCode === 204) {
-    router.push('/login')
+    router.push({ name: 'login' })
   }
 }
 
@@ -50,7 +51,7 @@ const { title } = defineProps<{
       <DefaultButton
         variant="primary"
         size="md"
-        label="Login"
+        label="Send Code"
         :loading="isSubmitting"
         type="submit"
       />
@@ -69,7 +70,7 @@ const { title } = defineProps<{
       <p class="text-center text-sm text-gray-500 mt-4">
         Already have an account?
         <router-link
-          to="/"
+          :to="{ name: 'login' }"
           class="text-primary"
           >Login</router-link
         >

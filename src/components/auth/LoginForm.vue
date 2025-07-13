@@ -1,18 +1,16 @@
 <script lang="ts" setup>
-import type { CardProps } from '@/types/common/card.types'
 import MailIcon from '@/components/icons/MailIcon.vue'
 import KeyIcon from '@/components/icons/KeyIcon.vue'
 import DefaultInput from '@/components/common/DefaultInput.vue'
 import DefaultButton from '@/components/common/DefaultButton.vue'
 import DefaultAlert from '@/components/common/DefaultAlert.vue'
+import DefaultForm from '@/components/common/DefaultForm.vue'
 import { loginSchema } from '@/schemas/login.schema'
 import { useForm } from '@/composables/useForm'
-import { useAuth } from '@/composables/useAuth'
+import { useLogin } from '@/composables/useLogin'
 import { useRouter } from 'vue-router'
 import type { LoginCredentials } from '@/types/auth'
 
-const { title } = defineProps<CardProps>()
-const { login, error, isLoading } = useAuth()
 const router = useRouter()
 
 const initialValues: LoginCredentials = {
@@ -23,10 +21,11 @@ const initialValues: LoginCredentials = {
 const onSubmit = async (formData: LoginCredentials) => {
   await login(formData)
   if (!error.value) {
-    router.push('/dashboard')
+    router.push({ name: 'dashboard' })
   }
 }
 
+const { login, error, isLoading } = useLogin()
 const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm({
   initialValues,
   schema: loginSchema,
@@ -35,54 +34,51 @@ const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm({
 </script>
 
 <template>
-  <form
-    @submit.prevent="handleSubmit"
-    class="card bg-base-100 shadow-xl min-w-96 items-center"
+  <DefaultForm
+    title="Login"
+    :handleSubmit="handleSubmit"
   >
-    <div class="card-body">
-      <h1 class="text-center font-bold text-4xl mb-4 w-96">{{ title }}</h1>
-      <DefaultInput
-        :model-value="values.email"
-        @update:model-value="handleChange('email', $event)"
-        placeholder="Enter your email"
-        type="email"
-        size="md"
-        :Icon="MailIcon"
-      />
-      <DefaultInput
-        placeholder="Enter your password"
-        :model-value="values.password"
-        @update:model-value="handleChange('password', $event)"
-        type="password"
-        size="md"
-        :Icon="KeyIcon"
-      />
+    <DefaultInput
+      :model-value="values.email"
+      @update:model-value="handleChange('email', $event)"
+      placeholder="Enter your email"
+      type="email"
+      size="md"
+      :Icon="MailIcon"
+    />
+    <DefaultInput
+      placeholder="Enter your password"
+      :model-value="values.password"
+      @update:model-value="handleChange('password', $event)"
+      type="password"
+      size="md"
+      :Icon="KeyIcon"
+    />
+    <router-link
+      :to="{ name: 'forgot-password' }"
+      class="text-neutral hover:text-primary duration-300 text-sm text-right mb-2"
+      >Forgot password?</router-link
+    >
+    <DefaultButton
+      variant="primary"
+      size="md"
+      label="Login"
+      :loading="isSubmitting || isLoading"
+      type="submit"
+    />
+    <DefaultAlert
+      v-if="errors.email || errors.password || error"
+      type="neutral"
+      :message="errors.email || errors.password || error || ''"
+      class="w-96 text-red-400"
+    />
+    <p class="text-center text-sm text-gray-500 mt-4">
+      Don't have an account?
       <router-link
-        to="/forgot-password"
-        class="text-neutral hover:text-primary duration-300 text-sm text-right mb-2"
-        >Forgot password?</router-link
+        :to="{ name: 'signup' }"
+        class="text-primary"
+        >Register</router-link
       >
-      <DefaultButton
-        variant="primary"
-        size="md"
-        label="Login"
-        :loading="isSubmitting || isLoading"
-        type="submit"
-      />
-      <DefaultAlert
-        v-if="errors.email || errors.password || error"
-        type="neutral"
-        :message="errors.email || errors.password || error || ''"
-        class="w-96 text-red-400"
-      />
-      <p class="text-center text-sm text-gray-500 mt-4">
-        Don't have an account?
-        <router-link
-          to="/register"
-          class="text-primary"
-          >Register</router-link
-        >
-      </p>
-    </div>
-  </form>
+    </p>
+  </DefaultForm>
 </template>

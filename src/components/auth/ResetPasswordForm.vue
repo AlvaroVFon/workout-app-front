@@ -7,7 +7,9 @@ import DefaultInput from '@/components/common/DefaultInput.vue'
 import DefaultButton from '@/components/common/DefaultButton.vue'
 import DefaultAlert from '@/components/common/DefaultAlert.vue'
 import KeyIcon from '@/components/icons/KeyIcon.vue'
+import HashIcon from '@/components/icons/HashIcon.vue'
 import { resetPasswordSchema } from '@/schemas/login.schema'
+import { Endpoint } from '@/utils/endpoints.enum'
 
 const { title } = defineProps<{
   title: string
@@ -25,9 +27,11 @@ const initialValues = reactive({
 
 const onSubmit = async (formData: typeof initialValues) => {
   const data = { password: formData.password, code: formData.code }
-  const response = await apiService.post(`/auth/reset-password?token=${token}`, data)
-  if (response.statusCode === 204) {
-    router.push('/login')
+  await apiService.post(`${Endpoint.RESET_PASSWORD}/${token}`, data)
+  if (success) {
+    setTimeout(() => {
+      router.push({ name: 'login' })
+    }, 3000)
   }
 }
 
@@ -51,6 +55,7 @@ const { values, errors, handleChange, handleSubmit, isSubmitting, success } = us
         placeholder="Enter your reset code"
         type="text"
         size="md"
+        :Icon="HashIcon"
       />
 
       <DefaultInput
@@ -94,7 +99,7 @@ const { values, errors, handleChange, handleSubmit, isSubmitting, success } = us
       <p class="text-center text-sm text-gray-500 mt-4">
         Already have an account?
         <router-link
-          to="/"
+          :to="{ name: 'login' }"
           class="text-primary"
           >Login</router-link
         >
