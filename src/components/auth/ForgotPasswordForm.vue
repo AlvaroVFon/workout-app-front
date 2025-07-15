@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useForm } from '@/composables/useForm'
 import { forgotPasswordSchema } from '@/schemas/login.schema'
@@ -11,15 +11,20 @@ import DefaultAlert from '@/components/common/DefaultAlert.vue'
 import { Endpoint } from '@/utils/endpoints.enum'
 
 const router = useRouter()
+const error = ref<string | null>(null)
 
 const initialValues = reactive({
   email: '',
 })
 
 async function onSubmit(formData: typeof initialValues) {
-  const response = await apiService.post(Endpoint.FORGOT_PASSWORD, formData)
-  if (response.statusCode === 204) {
-    router.push({ name: 'login' })
+  try {
+    const response = await apiService.post(Endpoint.FORGOT_PASSWORD, formData)
+    if (response.statusCode === 204) {
+      router.push({ name: 'login' })
+    }
+  } catch {
+    error.value = 'An error occurred while sending the reset password email.'
   }
 }
 

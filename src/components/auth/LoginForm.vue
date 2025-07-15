@@ -7,7 +7,7 @@ import DefaultAlert from '@/components/common/DefaultAlert.vue'
 import DefaultForm from '@/components/common/DefaultForm.vue'
 import { loginSchema } from '@/schemas/login.schema'
 import { useForm } from '@/composables/useForm'
-import { useLogin } from '@/composables/useLogin'
+import { useAuthStore } from '@/stores/useAuthStore'
 import { useRouter } from 'vue-router'
 import type { LoginCredentials } from '@/types/auth'
 
@@ -18,14 +18,15 @@ const initialValues: LoginCredentials = {
   password: '',
 }
 
+const authStore = useAuthStore()
+
 const onSubmit = async (formData: LoginCredentials) => {
-  await login(formData)
-  if (!error.value) {
+  await authStore.login(formData)
+  if (!authStore.error) {
     router.push({ name: 'dashboard' })
   }
 }
 
-const { login, error, isLoading } = useLogin()
 const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm({
   initialValues,
   schema: loginSchema,
@@ -63,13 +64,13 @@ const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm({
       variant="primary"
       size="md"
       label="Login"
-      :loading="isSubmitting || isLoading"
+      :loading="isSubmitting || authStore.isLoading"
       type="submit"
     />
     <DefaultAlert
-      v-if="errors.email || errors.password || error"
+      v-if="errors.email || errors.password || authStore.error"
       type="neutral"
-      :message="errors.email || errors.password || error || ''"
+      :message="errors.email || errors.password || authStore.error || ''"
       class="w-96 text-red-400"
     />
     <p class="text-center text-sm text-gray-500 mt-4">

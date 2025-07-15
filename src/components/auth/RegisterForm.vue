@@ -80,7 +80,7 @@ const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm({
 
     <DefaultAlert
       v-if="success"
-      type="success"
+      type="info"
       message="Registration successful! Please check your email to verify your account."
       class="w-96"
     />

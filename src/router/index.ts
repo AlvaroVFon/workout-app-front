@@ -1,53 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useLogin } from '@/composables/useLogin'
-import LoginView from '../views/auth/LoginView.vue'
+import { useAuthStore } from '@/stores/useAuthStore'
+import { authRoutes } from './auth.route'
+import { dashboardRoutes } from './dashboard.route'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'login',
-      component: LoginView,
-      meta: { requiresGuest: true },
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: () => import('../views/auth/RegisterView.vue'),
-      meta: { requiresGuest: true },
-    },
-    {
-      path: '/signup-verify/:uuid',
-      name: 'signup-verify',
-      component: () => import('../views/auth/SignupVerifyView.vue'),
-      meta: { requiresGuest: true },
-    },
-    {
-      path: '/forgot-password',
-      name: 'forgot-password',
-      component: () => import('../views/auth/ForgotPasswordView.vue'),
-    },
-    {
-      path: '/reset-password/:token',
-      name: 'reset-password',
-      component: () => import('../views/auth/ResetPasswordView.vue'),
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: () => import('../views/dashboard/DefaultDashboardView.vue'),
-      meta: { requiresAuth: true },
-    },
-  ],
+  routes: [...authRoutes, dashboardRoutes],
 })
 
 router.beforeEach((to, from, next) => {
-  const { isAuthenticated } = useLogin()
+  const authStore = useAuthStore()
+  if (authStore.token && !authStore.isAuthenticated) {
+    authStore.initializeAuth()
+  }
 
-  if (to.meta.requiresAuth && !isAuthenticated.value) {
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/')
-  } else if (to.meta.requiresGuest && isAuthenticated.value) {
+  } else if (to.meta.requiresGuest && authStore.isAuthenticated) {
     next('/dashboard')
   } else {
     next()
