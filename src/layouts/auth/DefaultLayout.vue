@@ -6,7 +6,7 @@ import ThemeController from '@/components/common/ThemeController.vue'
   <DefaultNavbar>
     <template #logo>
       <router-link
-        to="/"
+        :to="{ name: 'login' }"
         class="btn btn-ghost text-xl"
       >
         Workout Controller

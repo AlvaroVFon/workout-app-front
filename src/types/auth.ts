@@ -15,12 +15,6 @@ export interface LoginCredentials extends Record<string, unknown> {
 export interface RegisterCredentials extends Record<string, unknown> {
   email: string
   password: string
-  passwordConfirm: string
-  name: string
-  lastName: string
-  country: string
-  idDocument: string
-  role: string
 }
 
 export interface AuthState {

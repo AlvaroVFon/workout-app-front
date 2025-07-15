@@ -9,17 +9,7 @@ export function useLocalStorage() {
   }
 
   function get(key: string): string | null {
-    const item = localStorage.getItem(key)
-    if (item) {
-      try {
-        const parsed = JSON.parse(item)
-        data.value = parsed
-        return parsed
-      } catch {
-        return null
-      }
-    }
-    return null
+    return localStorage.getItem(key)
   }
 
   function remove(key: string): void {

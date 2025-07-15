@@ -5,6 +5,7 @@ const { type = 'error', message = 'Alert message', size = 'md' } = defineProps<A
 
 const alertClass = computed(() => {
   return {
+    neutral: 'alert-neutral',
     error: 'alert-error',
     warning: 'alert-warning',
     info: 'alert-info',

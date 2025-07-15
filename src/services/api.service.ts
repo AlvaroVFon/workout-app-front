@@ -1,10 +1,10 @@
-import { validatedParameters } from '@/config/parameters'
+import { parameters } from '@/config/parameters'
 import type { ApiResponse } from '@/types/api.types'
 import axios from 'axios'
 import type { AxiosHeaders, AxiosInstance } from 'axios'
 
 class ApiService {
-  private readonly apiUrl: string = validatedParameters.apiUrl
+  private readonly apiUrl: string = parameters.apiUrl
   private axiosInstance: AxiosInstance
 
   constructor() {

@@ -43,14 +43,19 @@ Aplicación frontend para la gestión completa de entrenamientos y atletas. Ofre
 
 ## ✨ Características
 
-- 🔐 **Sistema de autenticación completo** (Login/Register)
+- 🔐 **Sistema de autenticación completo** (Login/Register/Logout) con persistencia de sesión
+- 🧑‍💻 **Gestión de estado global** con Pinia (stores tipados, lógica desacoplada)
+- 🧩 **Navegación protegida** y guards reactivos según el estado de autenticación
+- 🗂️ **Estructura modular**: rutas separadas por dominio (auth/dashboard), layouts reutilizables y sidebar dinámico
+- 🧑‍🎤 **Componentes UI avanzados**: Drawer, Sidebar, Navbar, Container, Iconos SVG personalizados
+- 🏋️‍♂️ **Dashboard de atletas** (estructura inicial y vistas de ejemplo)
+- 🧹 **Eliminación de código legacy**: migración de useLogin a store Pinia
 - 🎨 **UI moderna y responsiva** con Tailwind CSS y DaisyUI
 - 🌙 **Tema claro/oscuro** con persistencia
 - 📱 **Diseño mobile-first**
 - 🔒 **Rutas protegidas** con guards de autenticación
 - 🚀 **TypeScript** para type safety
 - 📦 **Componentes reutilizables** y modulares
-- 🔄 **Estado global** con Pinia
 - ⚡ **Hot Module Replacement** con Vite
 - 🧪 **Configuración de testing** lista para usar
 
@@ -151,6 +156,15 @@ src/
 - [x] Persistencia de sesión
 - [x] Rutas protegidas
 - [x] Manejo de tokens JWT
+
+### ✅ Nuevas funcionalidades
+- [x] Store de autenticación con Pinia (login, logout, persistencia, guards)
+- [x] Refactor de rutas: separación por dominio (auth/dashboard)
+- [x] Drawer y sidebar navegable en dashboard
+- [x] Componentes base: Drawer, Sidebar, Container, Iconos SVG
+- [x] Eliminación de useLogin y migración a Pinia
+- [x] Manejo de errores mejorado en login y forgot password
+- [x] Vistas iniciales de atletas y perfil en dashboard
 
 ### ✅ UI/UX
 - [x] Sistema de temas (claro/oscuro)
