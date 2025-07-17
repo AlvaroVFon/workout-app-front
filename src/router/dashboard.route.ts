@@ -7,10 +7,23 @@ export const dashboardRoutes: RouteRecordRaw = {
   meta: { requiresAuth: true },
   children: [
     {
+      path: 'stats',
+      name: 'stats',
+      component: () => import('../views/dashboard/stats/StatsView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: 'athletes',
       name: 'athletes',
-      component: () => import('../views/dashboard/athlethes/AthletesView.vue'),
+      component: () => import('../views/dashboard/athletes/AthletesView.vue'),
       meta: { requiresAuth: true },
+    },
+    {
+      path: 'athletes/:id',
+      name: 'athlete',
+      component: () => import('../views/dashboard/athletes/AthleteView.vue'),
+      meta: { requiresAuth: true },
+      props: true,
     },
     {
       path: 'profile',

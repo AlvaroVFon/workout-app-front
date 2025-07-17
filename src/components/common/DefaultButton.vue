@@ -21,6 +21,9 @@ const className = computed(() => {
     neutral: 'btn-neutral',
     ghost: 'btn-ghost',
     link: 'btn-link',
+    success: 'btn-success',
+    warning: 'btn-warning',
+    error: 'btn-error',
   }[variant]
 
   const sizeClass = {
