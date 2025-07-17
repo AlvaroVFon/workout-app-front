@@ -64,10 +64,7 @@ async function handleLogout() {
       <DefaultDrawerSideBar :links="sidebarLinks" />
     </template>
     <template #content>
-      <DefaultContainer
-        max="3xl"
-        centered
-      >
+      <DefaultContainer max="3/4">
         <router-view />
       </DefaultContainer>
     </template>
